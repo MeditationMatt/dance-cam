@@ -10,6 +10,11 @@ Record a dance video with your own song as the soundtrack.
 
 Mic is off by default so only the music is on the soundtrack.
 
+## Mocap Mirror
+
+Webcam full-body 3D motion capture that drives a Mixamo-rigged character and exports BVH / GLB.
+See [`mocap/`](mocap/README.md) — live at https://meditationmatt.github.io/dance-cam/mocap/
+
 ## LAN (Sophia Monster)
 
 - HTTPS: https://192.168.4.211:8783/
