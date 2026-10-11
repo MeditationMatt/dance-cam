@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mocap Mirror</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+      "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <aside id="panel" class="panel">
+    <header>
+      <h1>Mocap Mirror</h1>
+      <button id="btnCollapse" class="icon" title="Hide panel" aria-label="Hide panel">‹</button>
+    </header>
+
+    <section>
+      <h2>Camera</h2>
+      <button id="btnStart" class="primary wide">Start webcam</button>
+      <label class="row">Device <select id="selDevice"><option value="">Default camera</option></select></label>
+      <label class="row">Tracking model
+        <select id="selQuality">
+          <option value="lite">Lite (fastest)</option>
+          <option value="full" selected>Full</option>
+          <option value="heavy">Heavy (most precise)</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="chkHands" checked /> Track fingers</label>
+    </section>
+
+    <section>
+      <h2>Character</h2>
+      <select id="selChar" class="wide"></select>
+      <label class="file wide">Load Mixamo FBX / GLB…
+        <input id="fileChar" type="file" accept=".fbx,.glb,.gltf" hidden />
+      </label>
+      <p class="hint">Or drag &amp; drop a rigged character onto the page.</p>
+    </section>
+
+    <section>
+      <h2>Motion</h2>
+      <label class="check"><input type="checkbox" id="chkMirror" checked /> Mirror mode</label>
+      <label class="check"><input type="checkbox" id="chkLegs" checked /> Track legs</label>
+      <label class="check"><input type="checkbox" id="chkGround" checked /> Keep feet on floor</label>
+      <label class="check"><input type="checkbox" id="chkRoot" checked /> Move around (root motion)</label>
+      <label class="check"><input type="checkbox" id="chkProportions" /> Match my proportions</label>
+      <label class="row">Smoothing <input type="range" id="rngSmooth" min="0" max="1" step="0.01" value="0.45" /></label>
+      <button id="btnRecenter" class="wide">Recenter (stand in your spot)</button>
+    </section>
+
+    <section>
+      <h2>View</h2>
+      <label class="check"><input type="checkbox" id="chkVideo" checked /> Show webcam</label>
+      <label class="check"><input type="checkbox" id="chkSkeleton" /> Show skeleton</label>
+    </section>
+
+    <section>
+      <h2>Capture</h2>
+      <label class="check"><input type="checkbox" id="chkCountdown" checked /> 3-second countdown</label>
+      <button id="btnRecord" class="record wide" disabled>● Record</button>
+      <div class="grid2">
+        <button id="btnPlay" disabled>▶ Play take</button>
+        <button id="btnBVH" disabled>BVH</button>
+        <button id="btnGLB" disabled>GLB</button>
+        <button id="btnJSON" disabled>JSON</button>
+      </div>
+      <p id="takeInfo" class="hint">No take yet.</p>
+    </section>
+  </aside>
+  <button id="btnExpand" class="icon floating" title="Show panel" aria-label="Show panel" hidden>›</button>
+
+  <div id="pip" class="pip">
+    <div id="pipInner" class="pip-inner mirrored">
+      <video id="video" playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+  </div>
+
+  <div id="hud" class="hud">
+    <span id="status">Press “Start webcam”.</span>
+    <span id="fps"></span>
+  </div>
+  <div id="countdown" class="countdown" hidden></div>
+  <div id="recBadge" class="rec-badge" hidden>● REC <span id="recTime">0.0s</span></div>
+  <div id="drop" class="drop" hidden>Drop FBX / GLB to load character</div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
